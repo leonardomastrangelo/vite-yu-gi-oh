@@ -1,7 +1,10 @@
 <template>
+  <!-- header -->
   <HeaderLM />
+  <!-- main -->
   <main class="p-5">
-    <div class="container">
+    <!-- wrapper -->
+    <div class="container" v-if="store.cardsList.length === max">
       <!-- header -->
       <div class="top-bar">
         <h2 class="text-light fs-5 p-3 m-0">
@@ -16,12 +19,15 @@
         </div>
       </div>
     </div>
+    <!-- loader component -->
+    <LoaderLM v-else />
   </main>
 </template>
 
 <script>
 import HeaderLM from './components/HeaderLM.vue';
 import CardLM from './components/CardLM.vue';
+import LoaderLM from './components/LoaderLM.vue';
 import axios from 'axios';
 import { store } from './data/store.js'
 export default {
@@ -29,10 +35,12 @@ export default {
   components: {
     HeaderLM,
     CardLM,
+    LoaderLM
   },
   data() {
     return {
       store,
+      max: 39
     }
   },
   methods: {

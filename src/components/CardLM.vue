@@ -5,7 +5,7 @@
             <img :src="image" :alt="name" class="my-fluid">
         </div>
         <!-- name -->
-        <h3 class="fs-5 m-0 p-3">
+        <h3 class="fs-5 m-0 p-3 text-light text-uppercase">
             {{ name }}
         </h3>
         <!-- type -->
