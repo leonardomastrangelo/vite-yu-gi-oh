@@ -1,10 +1,12 @@
 <template>
   <!-- header -->
   <HeaderLM />
+
   <!-- main -->
   <main class="p-5">
     <!-- wrapper -->
     <div class="container" v-if="store.cardsList.length === max">
+
       <!-- header -->
       <div class="top-bar">
         <h2 class="text-light fs-5 p-3 m-0">
@@ -21,6 +23,7 @@
     </div>
     <!-- loader component -->
     <LoaderLM v-else />
+
   </main>
 </template>
 
