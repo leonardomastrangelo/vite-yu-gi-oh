@@ -2,12 +2,11 @@
   <!-- header -->
   <HeaderLM />
 
-  <SelectLM @filter-type="getCards" />
   <!-- main -->
   <main class="p-5">
+    <SelectLM @filter-type="getCards" />
     <!-- wrapper -->
-    <div class="container">
-
+    <div class="container" v-if="store.loading === false">
       <!-- header -->
       <div class="top-bar">
         <h2 class="text-light fs-5 p-3 m-0">
@@ -22,7 +21,7 @@
         </div>
       </div>
     </div>
-
+    <LoaderLM v-else />
 
   </main>
 </template>
@@ -45,19 +44,21 @@ export default {
   data() {
     return {
       store,
-      max: 38,
     }
   },
   methods: {
     getCards(value) {
       if (value === undefined) {
-        axios.get(store.apiUrl + "?num=39&offset=0").then((response) => {
+        axios.get(store.apiUrl + store.queryStringPage).then((response) => {
           store.cardsList = response.data.data
+        }).finally(() => {
+          store.loading = false
         })
-      }
-      else {
-        axios.get(store.apiUrl + store.queryString + value).then((response) => {
+      } else {
+        axios.get(store.apiUrl + store.queryStringPage + store.queryStringType + value).then((response) => {
           store.cardsList = response.data.data
+        }).finally(() => {
+          store.loading = false
         })
       }
     },
