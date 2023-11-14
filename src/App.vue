@@ -2,10 +2,11 @@
   <!-- header -->
   <HeaderLM />
 
+  <SelectLM @filter-type="getCards" />
   <!-- main -->
   <main class="p-5">
     <!-- wrapper -->
-    <div class="container" v-if="store.cardsList.length === max">
+    <div class="container">
 
       <!-- header -->
       <div class="top-bar">
@@ -21,8 +22,7 @@
         </div>
       </div>
     </div>
-    <!-- loader component -->
-    <LoaderLM v-else />
+
 
   </main>
 </template>
@@ -31,6 +31,7 @@
 import HeaderLM from './components/HeaderLM.vue';
 import CardLM from './components/CardLM.vue';
 import LoaderLM from './components/LoaderLM.vue';
+import SelectLM from './components/SelectLM.vue';
 import axios from 'axios';
 import { store } from './data/store.js'
 export default {
@@ -38,20 +39,28 @@ export default {
   components: {
     HeaderLM,
     CardLM,
-    LoaderLM
+    LoaderLM,
+    SelectLM
   },
   data() {
     return {
       store,
-      max: 39
+      max: 38,
     }
   },
   methods: {
-    getCards() {
-      axios.get(store.apiUrl + store.queryString).then((response) => {
-        store.cardsList = response.data.data
-      })
-    }
+    getCards(value) {
+      if (value === undefined) {
+        axios.get(store.apiUrl + "?num=39&offset=0").then((response) => {
+          store.cardsList = response.data.data
+        })
+      }
+      else {
+        axios.get(store.apiUrl + store.queryString + value).then((response) => {
+          store.cardsList = response.data.data
+        })
+      }
+    },
   },
   created() {
     this.getCards()
